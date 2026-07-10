@@ -1,0 +1,25 @@
+local:
+  stream_input_path: "data/stream_input"
+  current_state_path: "data/current_state"
+  metrics_path: "data/metrics"
+  checkpoint_path: "data/checkpoints/local"
+  window_duration: "5 minutes"
+  trigger_interval: "10 seconds"
+
+local-kafka:
+  kafka_bootstrap_servers: "localhost:9092"
+  kafka_topic: "pos-events"
+  current_state_path: "data/current_state"
+  metrics_path: "data/metrics"
+  checkpoint_path: "data/checkpoints/local-kafka"
+  window_duration: "5 minutes"
+  trigger_interval: "10 seconds"
+
+prod:
+  kafka_bootstrap_servers: "b-1.retail-pos-cluster.xxxxx.kafka.us-east-1.amazonaws.com:9092"
+  kafka_topic: "pos-events"
+  current_state_path: "s3://retail-streaming/current_state"
+  metrics_path: "s3://retail-streaming/metrics"
+  checkpoint_path: "s3://retail-streaming/checkpoints/prod"
+  window_duration: "5 minutes"
+  trigger_interval: "30 seconds"
