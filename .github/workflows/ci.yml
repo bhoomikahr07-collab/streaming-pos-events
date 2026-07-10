@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-cdc-logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install lightweight dependencies
+        run: pip install pyyaml pytest
+
+      # Only the pure-Python CDC/windowing logic is tested in CI —
+      # src/streaming_pipeline.py needs a real Spark + Kafka runtime,
+      # which isn't set up here. See reports/README.md.
+      - name: Run CDC logic unit tests
+        run: python -m unittest discover tests -v
+
+      - name: Generate sample events + report (smoke test)
+        run: |
+          python src/event_producer.py
+          python reports/generate_report.py
